@@ -12,10 +12,15 @@ NULLABLE = {
 
 class Habit(models.Model):
     """ Habit model """
+    name = models.CharField(
+        max_length=100,
+        verbose_name='Name',
+        **NULLABLE
+    )
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name='owner',
+        verbose_name='Owner',
         **NULLABLE
     )
     place = models.CharField(
@@ -61,6 +66,7 @@ class Habit(models.Model):
         default=False,
         verbose_name='Is habit public'
     )
+
     class Meta:
         verbose_name = 'Habit'
         verbose_name_plural = 'Habits'
