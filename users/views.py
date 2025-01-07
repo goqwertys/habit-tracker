@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from users.models import User
-from users.permissions import IsOwner
+from users.permissions import IsOwnerOrReadOnly
 from users.serializers import UserUpdateSerializer, UserProfileSerializer, UserSerializer
 
 
@@ -17,7 +17,7 @@ class UserCreateAPIView(CreateAPIView):
 class UserProfileViewSet(ModelViewSet):
     """ User CRUD """
     queryset = User.objects.all()
-    permission_classes = [IsOwner]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_serializer_class(self):
         if self.action in ('update', 'partial_update'):
