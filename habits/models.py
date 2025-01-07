@@ -70,3 +70,6 @@ class Habit(models.Model):
     class Meta:
         verbose_name = 'Habit'
         verbose_name_plural = 'Habits'
+
+    def __str__(self):
+        return f'I {self.owner.name} will {self.action} at {self.place} at {self.start_time}'
