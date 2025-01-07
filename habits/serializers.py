@@ -1,3 +1,4 @@
+from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from habits.models import Habit
@@ -5,8 +6,26 @@ from habits.validators import RewardOrRelatedValidator, ExecutionTimeValidator, 
     PleasantHabitValidator, FrequencyValidator, RelatedPublicValidator, RelatedOwnerValidator
 
 
+class RelatedHabitSerializer(ModelSerializer):
+    """ Serializer for linked habit (read only) """
+    class Meta:
+        model = Habit
+        fields = '__all__'
+
+
 class HabitSerializer(ModelSerializer):
     """ Habit serializer """
+    # For reading data
+    related_habit = RelatedHabitSerializer(read_only=True)
+
+    # For writing data
+    related_habit_id = PrimaryKeyRelatedField(
+        queryset=Habit.objects.all(),
+        source='related_habit',
+        write_only=True,
+        allow_null=True
+    )
+
     class Meta:
         model = Habit
         fields = '__all__'
@@ -19,10 +38,3 @@ class HabitSerializer(ModelSerializer):
             RelatedPublicValidator('related_habit', 'is_public'),
             RelatedOwnerValidator('related_habit', 'owner')
         ]
-
-
-class RelatedHabitSerializer(ModelSerializer):
-    """ Serializer for linked habit (read only) """
-    class Meta:
-        model = Habit
-        fields = '__all__'
