@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 
 from habits.models import Habit
 from habits.validators import RewardOrRelatedValidator, ExecutionTimeValidator, PleasantRelatedValidator, \
-    PleasantHabitValidator, FrequencyValidator
+    PleasantHabitValidator, FrequencyValidator, RelatedPublicValidator, RelatedOwnerValidator
 
 
 class HabitSerializer(ModelSerializer):
@@ -15,5 +15,7 @@ class HabitSerializer(ModelSerializer):
             ExecutionTimeValidator('execution_time'),
             PleasantRelatedValidator('related_habit'),
             PleasantHabitValidator('is_pleasant', 'reward', 'related_habit'),
-            FrequencyValidator('frequency')
+            FrequencyValidator('frequency'),
+            RelatedPublicValidator('related_habit', 'is_public'),
+            RelatedOwnerValidator('related_habit', 'owner')
         ]
