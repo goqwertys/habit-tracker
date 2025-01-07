@@ -19,3 +19,10 @@ class HabitSerializer(ModelSerializer):
             RelatedPublicValidator('related_habit', 'is_public'),
             RelatedOwnerValidator('related_habit', 'owner')
         ]
+
+
+class RelatedHabitSerializer(ModelSerializer):
+    """ Serializer for linked habit (read only) """
+    class Meta:
+        model = Habit
+        fields = '__all__'
