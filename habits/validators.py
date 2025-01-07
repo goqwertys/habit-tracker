@@ -63,7 +63,7 @@ class FrequencyValidator(BaseValidator):
             )
 
 class RelatedPublicValidator(BaseValidator):
-    """ Validates if related habit is public """
+    """ Validates that the related habit is public if the current habit is public. """
     def validate(self, related_habit, is_public, **kwargs):
         if related_habit and is_public:
             if not related_habit.is_public:
@@ -72,7 +72,7 @@ class RelatedPublicValidator(BaseValidator):
                 )
 
 class RelatedOwnerValidator(BaseValidator):
-    """ Validates if related habit is ownd by same owner """
+    """ Validates that the related habit belongs to the same owner as the current habit. """
     def validate(self, related_habit, owner):
         if not ( related_habit.owner == owner ):
             raise serializers.ValidationError(
