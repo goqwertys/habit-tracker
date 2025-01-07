@@ -1,4 +1,3 @@
-from dataclasses import fields
 from datetime import timedelta
 
 from rest_framework import serializers
@@ -71,3 +70,11 @@ class RelatedPublicValidator(BaseValidator):
                 raise serializers.ValidationError(
                     'Your related habit must be public'
                 )
+
+class RelatedOwnerValidator(BaseValidator):
+    """ Validates if related habit is ownd by same owner """
+    def validate(self, related_habit, owner):
+        if not ( related_habit.owner == owner ):
+            raise serializers.ValidationError(
+                'Your related habit must be yours'
+            )
