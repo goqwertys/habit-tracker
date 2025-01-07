@@ -1,6 +1,8 @@
 from django.db.models import Q
-from rest_framework.generics import ListAPIView
+from rest_framework.decorators import action, permission_classes
+
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from habits.models import Habit
@@ -35,3 +37,10 @@ class HabitViewSet(ModelViewSet):
         habit = serializer.save()
         habit.owner = self.request.user
         habit.save()
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def my_habits(self, request):
+        """ Endpoint for accessing only your habits """
+        habits = Habit.objects.filter(owner=request.user)
+        serializer = self.get_serializer(habits, many=True)
+        return Response(serializer.data)
