@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 
@@ -13,22 +14,26 @@ class RelatedHabitSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class HabitSerializer(ModelSerializer):
-    """ Habit serializer """
-    # For reading data
+class HabitSerializer(serializers.ModelSerializer):
+    # Для чтения данных
     related_habit = RelatedHabitSerializer(read_only=True)
 
-    # For writing data
-    related_habit_id = PrimaryKeyRelatedField(
+    # Для записи данных
+    related_habit_id = serializers.PrimaryKeyRelatedField(
         queryset=Habit.objects.all(),
         source='related_habit',
         write_only=True,
-        allow_null=True
+        allow_null=True,
+        default=None
     )
 
     class Meta:
         model = Habit
-        fields = '__all__'
+        fields = [
+            'id', 'name', 'place', 'start_time', 'action', 'is_pleasant',
+            'frequency', 'reward', 'execution_time', 'is_public', 'owner',
+            'related_habit', 'related_habit_id'
+        ]
         validators = [
             RewardOrRelatedValidator('is_pleasant', 'related_habit', 'reward'),
             ExecutionTimeValidator('execution_time'),
