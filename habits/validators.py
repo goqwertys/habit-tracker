@@ -74,7 +74,7 @@ class RelatedPublicValidator(BaseValidator):
 class RelatedOwnerValidator(BaseValidator):
     """ Validates that the related habit belongs to the same owner as the current habit. """
     def validate(self, related_habit, owner):
-        if not ( related_habit.owner == owner ):
+        if related_habit is not None and not (related_habit.owner == owner):
             raise serializers.ValidationError(
                 'Your related habit must be yours'
             )
