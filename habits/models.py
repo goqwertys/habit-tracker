@@ -1,7 +1,4 @@
-import json
 from datetime import timedelta
-
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
 
 from django.db import models
 

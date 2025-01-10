@@ -62,6 +62,7 @@ class FrequencyValidator(BaseValidator):
                 'You cannot perform a habit less often than once every 7 days.'
             )
 
+
 class RelatedPublicValidator(BaseValidator):
     """ Validates that the related habit is public if the current habit is public. """
     def validate(self, related_habit, is_public, **kwargs):
@@ -70,6 +71,7 @@ class RelatedPublicValidator(BaseValidator):
                 raise serializers.ValidationError(
                     'Your related habit must be public'
                 )
+
 
 class RelatedOwnerValidator(BaseValidator):
     """ Validates that the related habit belongs to the same owner as the current habit. """
