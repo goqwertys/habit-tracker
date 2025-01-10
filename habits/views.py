@@ -1,4 +1,6 @@
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import action
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -10,7 +12,42 @@ from habits.paginators import HabitPaginator
 from habits.serializers import HabitSerializer
 from users.permissions import IsOwner
 
-
+@method_decorator(
+    name='list',
+    decorator=swagger_auto_schema(
+        operation_description='Endpoint for accessing only public habits'
+    ),
+)
+@method_decorator(
+    name='retrieve',
+    decorator=swagger_auto_schema(
+        operation_description='Habit detail API view'
+    )
+)
+@method_decorator(
+    name='create',
+    decorator=swagger_auto_schema(
+        operation_description='Habit create API view'
+    )
+)
+@method_decorator(
+    name='update',
+    decorator=swagger_auto_schema(
+        operation_description='Habit update API view'
+    )
+)
+@method_decorator(
+    name='destroy',
+    decorator=swagger_auto_schema(
+        operation_description='Habit delete API view'
+    )
+)
+@method_decorator(
+    name='my_habits',
+    decorator=swagger_auto_schema(
+        operation_description='Endpoint for accessing only your habits'
+    )
+)
 class HabitViewSet(ModelViewSet):
     """ Habit CRUD """
     queryset = Habit.objects.all()
