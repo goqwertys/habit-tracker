@@ -78,36 +78,36 @@ class Habit(models.Model):
     def __str__(self):
         return f'{self.owner.name} - {self.action} - {self.place} - {self.start_time}'
 
-    def create_periodic_task(self):
-        """ Creates a periodic task in Celery Beat to notify you of a habit. """
-        hour = self.start_time.hour
-        minute = self.start_time.minute
-
-        schedule, _ = CrontabSchedule.objects.get_or_create(
-            minute=minute,
-            hour=hour,
-            day_of_week='*',
-            day_of_month='*',
-            month_of_year='*'
-        )
-
-        task = PeriodicTask.objects.create(
-            crontab=schedule,
-            name=f'Habit reminder - {self.name}',
-            task='habits.tasks.send_habit_notification',
-            args=json.dumps([self.id]),
-            enabled=True
-        )
-
-        return task
-
-    def save(self, *args, **kwargs):
-        """ Override the save method to automatically create a task when you create a habit. """
-        if self.pk:
-            old_habit = Habit.objects.get(pk=self.pk)
-            if old_habit.start_time != self.start_time:
-                PeriodicTask.objects.filter(name=f'Habit reminder - {self.name}').delete()
-                self.create_periodic_task()
-            else:
-                self.create_periodic_task()
-        super().save(*args, **kwargs)
+    # def create_periodic_task(self):
+    #     """ Creates a periodic task in Celery Beat to notify you of a habit. """
+    #     hour = self.start_time.hour
+    #     minute = self.start_time.minute
+    #
+    #     schedule, _ = CrontabSchedule.objects.get_or_create(
+    #         minute=minute,
+    #         hour=hour,
+    #         day_of_week='*',
+    #         day_of_month='*',
+    #         month_of_year='*'
+    #     )
+    #
+    #     task = PeriodicTask.objects.create(
+    #         crontab=schedule,
+    #         name=f'Habit reminder - {self.name}',
+    #         task='habits.tasks.send_habit_notification',
+    #         args=json.dumps([self.id]),
+    #         enabled=True
+    #     )
+    #
+    #     return task
+    #
+    # def save(self, *args, **kwargs):
+    #     """ Override the save method to automatically create a task when you create a habit. """
+    #     if self.pk:
+    #         old_habit = Habit.objects.get(pk=self.pk)
+    #         if old_habit.start_time != self.start_time:
+    #             PeriodicTask.objects.filter(name=f'Habit reminder - {self.name}').delete()
+    #             self.create_periodic_task()
+    #         else:
+    #             self.create_periodic_task()
+    #     super().save(*args, **kwargs)
