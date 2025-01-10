@@ -66,9 +66,9 @@ class HabitViewSet(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return Habit.objects.filter(Q(owner=user) | Q(is_public=True))
+            return Habit.objects.filter(Q(owner=user) | Q(is_public=True)).order_by('id')
         else:
-            return Habit.objects.filter(is_public=True)
+            return Habit.objects.filter(is_public=True).order_by('id')
 
     def perform_create(self, serializer):
         habit = serializer.save()
