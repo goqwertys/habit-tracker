@@ -19,7 +19,7 @@ def send_habit_notification():
 Your habit {habit.name}:
     Action: {habit.action},
     Place: {habit.place},
-    Time: {habit.execution_time}
+    Time: {habit.start_time}
     Reward or related habit: {reward_or_related_habit}
     Execution time: {habit.execution_time}
 Good luck'''

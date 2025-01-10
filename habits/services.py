@@ -5,6 +5,7 @@ from config.settings import BOT_TOKEN, TG_URL
 
 bot_token = BOT_TOKEN
 def send_notification(text, chat_id):
+    """ Sends message via Telegram """
     params = {
         'text': text,
         'chat_id': chat_id
