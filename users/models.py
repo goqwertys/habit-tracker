@@ -63,6 +63,13 @@ class User(AbstractUser):
         **NULLABLE
     )
 
+    tg_chat_id = models.CharField(
+        max_length=50,
+        verbose_name='Chat id',
+        help_text='Please enter your chat id',
+        **NULLABLE
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
