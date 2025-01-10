@@ -20,6 +20,7 @@ eventlet = "^0.38.2"
 redis = "^5.2.1"
 django-celery-beat = "^2.7.0"
 requests = "^2.32.3"
+coverage = "^7.6.10"
 
 [build-system]
 requires = ["poetry-core"]
