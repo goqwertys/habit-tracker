@@ -1,24 +1,17 @@
-FROM python:3.12 as builder
-
-WORKDIR /app
-
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-
-COPY pyproject.toml poetry.lock ./
-
-RUN poetry install --no-dev
-
 FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY --from=builder /root/.cache/pypoetry/virtualenvs /root/.cache/pypoetry/virtualenvs
-COPY --from=builder /app /app
+RUN apt-get update \
+    && apt-get install -y gcc libpq-dev libjpeg-dev zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/root/.cache/pypoetry/virtualenvs/app/bin:$PATH"
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+RUN mkdir -p /app/staticfiles && chmod -R 755 /app/staticfiles
 
 EXPOSE 8000
-
-CMD EXPOSE 8000
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
