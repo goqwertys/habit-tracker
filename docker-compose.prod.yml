@@ -35,7 +35,7 @@ services:
     command: >
       bash -c "celery -A config.celery  worker --loglevel=INFO -B"
     env_file:
-      - .env
+      - .env.prod
     depends_on:
       - redis
       - db
@@ -44,7 +44,7 @@ services:
     container_name: celery_beat
     build: .
     env_file:
-      - .env
+      - .env.prod
     command: >
       bash -c "celery -A config beat --loglevel=info"
     depends_on:
