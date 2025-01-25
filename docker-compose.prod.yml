@@ -61,6 +61,8 @@ services:
     volumes:
       - ./nginx/nginx.conf:/ect/nginx/nginx.conf
       - static_volume:/app/staticfiles
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
