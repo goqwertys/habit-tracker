@@ -73,7 +73,7 @@ class Habit(models.Model):
         verbose_name_plural = 'Habits'
 
     def __str__(self):
-        return f'{self.owner.name} - {self.action} - {self.place} - {self.start_time}'
+        return f'{self.owner.email} - {self.action} - {self.place} - {self.start_time}'
 
     # def create_periodic_task(self):
     #     """ Creates a periodic task in Celery Beat to notify you of a habit. """
