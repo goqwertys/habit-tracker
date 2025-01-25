@@ -31,3 +31,8 @@ class HabitAdmin(admin.ModelAdmin):
         'reward'
     )
     ordering = ('id',)
+
+    def get_owner_email(self, obj):
+        return obj.owner.email if obj.owner else "No owner"
+
+    get_owner_email.short_description = 'Owner Email'
