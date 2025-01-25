@@ -6,6 +6,7 @@ from habits.models import Habit
 @admin.register(Habit)
 class HabitAdmin(admin.ModelAdmin):
     list_display = (
+        'name',
         'owner',
         'place',
         'start_time',
@@ -22,6 +23,7 @@ class HabitAdmin(admin.ModelAdmin):
         'is_public'
     )
     search_fields = (
+        'name',
         'owner',
         'place',
         'action',
