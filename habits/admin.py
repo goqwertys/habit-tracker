@@ -7,7 +7,7 @@ from habits.models import Habit
 class HabitAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'owner',
+        'get_owner_email',
         'place',
         'start_time',
         'action',
@@ -24,7 +24,8 @@ class HabitAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'name',
-        'owner',
+        'owner__email',
+        'owner__telegram_nickname',
         'place',
         'action',
         'reward'
