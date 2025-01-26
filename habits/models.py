@@ -56,6 +56,7 @@ class Habit(models.Model):
         help_text="Specify the frequency of habit execution",
     )
     reward = models.CharField(
+        max_length=100,
         verbose_name='Reward after completing a habit',
         **NULLABLE
     )
