@@ -28,4 +28,4 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     """ Serializer for editing user """
     class Meta:
         model = User
-        fields = ['email', 'avatar', 'telegram_nickname']
+        fields = ['email', 'avatar', 'telegram_nickname', 'tg_chat_id']

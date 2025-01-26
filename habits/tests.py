@@ -23,7 +23,7 @@ class HabitTestCase(APITestCase):
             is_pleasant=False,
             frequency=4,
             reward='Nothing',
-            execution_time='00:01:30',
+            execution_time=timedelta(seconds=90),
             is_public=True,
             owner=cls.user,
             related_habit=None
@@ -42,7 +42,7 @@ class HabitTestCase(APITestCase):
             'is_pleasant': False,
             'frequency': 4,
             'reward': 'Nothing',
-            'execution_time': '00:01:30',
+            'execution_time': timedelta(seconds=90),
             'is_public': True,
             'owner': self.user,
             'related_habit': None
@@ -97,12 +97,12 @@ class HabitTestCase(APITestCase):
                 'id': self.habit.id,
                 'name': self.habit.name,
                 'place': self.habit.place,
-                'start_time': self.habit.start_time,
+                'start_time': '04:20:00',
                 'action': self.habit.action,
                 'is_pleasant': self.habit.is_pleasant,
                 'frequency': self.habit.frequency,
                 'reward': self.habit.reward,
-                'execution_time': self.habit.execution_time,
+                'execution_time': '00:01:30',
                 'is_public': self.habit.is_public,
                 'owner': self.user.id,
                 'related_habit': self.habit.related_habit
@@ -152,7 +152,7 @@ class HabitTestCase(APITestCase):
             'is_pleasant': self.habit.is_pleasant,
             'frequency': self.habit.frequency,
             'reward': self.habit.reward,
-            'execution_time': self.habit.execution_time,
+            'execution_time': '00:01:30',
             'is_public': self.habit.is_public,
             'owner': self.user.id,
             'related_habit': self.habit.related_habit
