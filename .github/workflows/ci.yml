@@ -42,7 +42,7 @@ jobs:
 
       - name: Run tests
         run: |
-          export $(cat .env | xargs)
+          export $(cat .env.prod | xargs)
           python manage.py test
 
   build:
@@ -52,9 +52,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Create .env file
+      - name: Create .env.prod file
         run: |
-          echo "${{ secrets.DOTENV }}" > .env
+          echo "${{ secrets.DOTENV }}" > .env.prod
 
       - name: Log in Docker Hub
         run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
@@ -72,9 +72,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Create .env file
+      - name: Create .env.prod file
         run: |
-          echo "${{ secrets.DOTENV }}" > .env
+          echo "${{ secrets.DOTENV }}" > .env.prod
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -83,7 +83,7 @@ jobs:
 
       - name: Deploy to server
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose.prod.yml .env ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/habit-tracker/
+          scp -o StrictHostKeyChecking=no docker-compose.prod.yml .env.prod ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/habit-tracker/
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
             cd /var/www/habit-tracker && \
             docker-compose -f docker-compose.prod.yml pull && \
