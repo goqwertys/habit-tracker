@@ -12,6 +12,7 @@ from habits.paginators import HabitPaginator
 from habits.serializers import HabitSerializer
 from users.permissions import IsOwner
 
+
 @method_decorator(
     name='list',
     decorator=swagger_auto_schema(

@@ -22,16 +22,16 @@ from rest_framework import permissions
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Habit tracker API",
-      default_version='v0.1',
-      description="Every action you take is a vote for the person you want to become",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="goqwertys@gmail.com", name="Author"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny,]
+    openapi.Info(
+        title="Habit tracker API",
+        default_version='v0.1',
+        description="Every action you take is a vote for the person you want to become",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="goqwertys@gmail.com", name="Author"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny,]
 )
 
 urlpatterns = [
