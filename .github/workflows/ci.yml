@@ -41,9 +41,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        env:
-          $(cat .env | xargs)
-        run: python manage.py test
+        run: |
+          export $(cat .env | xargs)
+          python manage.py test
 
   build:
     needs: tests
